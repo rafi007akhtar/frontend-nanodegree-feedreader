@@ -102,7 +102,7 @@ $(function() {
          * the use of Jasmine's beforeEach and asynchronous done() function.
          */
          
-        beforeEach(function() {
+        beforeEach(function(done) {
             for (let i = 0; i < 4; i++) {
                 loadFeed(i, function() {
                     done();
@@ -128,14 +128,32 @@ $(function() {
         
 
     /* DONE: Write a new test suite named "New Feed Selection" */
-    // describe("New Feed Selection", function() {
-    //     /* TODO: Write a test that ensures when a new feed is loaded
-    //      * by the loadFeed function that the content actually changes.
-    //      * Remember, loadFeed() is asynchronous.
-    //      */
-    //     it("content changes when new feed is loaded" function() {
+    describe("New Feed Selection", function() {
+        /* TODO: Write a test that ensures when a new feed is loaded
+         * by the loadFeed function that the content actually changes.
+         * Remember, loadFeed() is asynchronous.
+         */
+        
+        let oldFeed;
+        
+        beforeEach(function(done) {
+            oldFeed = document.querySelector(".feed");
+            oldFeed = oldFeed.textContent;
             
-    //     });
+            loadFeed(0, function() {
+                done();
+            })
+        });
+        
+        it("changes content when new feed is loaded", function(done) {
+            loadFeed(0);
+            let newFeed = document.querySelector(".feed");
+            newFeed = newFeed.textContent;
+            
+            expect(oldFeed).not.toEqual(newFeed);
+            
+            done();
+        });
     });
 
         
